@@ -682,6 +682,14 @@ async function baseStats() {
         baseStatsProgressbar.innerHTML += templatebaseStatsProgressbar(i);
         let baseStatsprogressbarChild = document.getElementById('basestatsProgressbarWidth' + i);
         baseStatsprogressbarChild.style.width = `${pokemonBaseStats['stats'][i]['base_stat']}%`;
+
+        if(pokemonBaseStats['stats'][i]['base_stat'] > 100) {
+            let difference = pokemonBaseStats['stats'][i]['base_stat'] - 100;
+            let basestatsProgressbarOverflow = document.getElementById('basestatsProgressbarOverflow' + i);
+            basestatsProgressbarOverflow.innerHTML += `<div id="basestatsProgressbarWidthSecond${i}" class="basestats-progressbar-child-second"></div>`
+            let basestatsProgressbarOverflowChild = document.getElementById('basestatsProgressbarWidthSecond' + i);
+            basestatsProgressbarOverflowChild.style.width =`${difference}%`;
+        }
     }
 }
 
@@ -716,7 +724,7 @@ function templatebaseStats() {
 
 function templatebaseStatsProgressbar(i) {
     return `
-    <div class="basestats-progressbar">
+    <div id="basestatsProgressbarOverflow${i}" class="basestats-progressbar">
         <div id="basestatsProgressbarWidth${i}" class="basestats-progressbar-child"></div>
     </div>`;
 }

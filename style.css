@@ -390,6 +390,8 @@ body {
     margin-right: 43px;
     margin-bottom: 31px;
     margin-top: 5px;
+    overflow: hidden;
+    position: relative;
 }
 
 .detailsarea-basestats-distance {
@@ -406,8 +408,15 @@ body {
 .basestats-progressbar-child {
     border-radius: 1.5em;
     background-color: rgb(73, 208, 176);
-    width: 200px;
     height: 0.6em;
+}
+
+.basestats-progressbar-child-second {
+    border-radius: 1.5em;
+    background-color: rgb(17, 124, 99);
+    height: 0.6em;
+    position: absolute;
+    bottom: 0;
 }
 
 .evolution-container {
