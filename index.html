@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokedex</title>
+    <link rel="icon" type="image/pokeball-favicon-jpg" href="img/pokeball-favicon.jpg">
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="fonts.css">
+</head>
+
+<body onload="init()">
+
+    <div class="main-container">
+        <div class="header">
+            <img class="pokemonlabel" src="img/logo_pokemon.png">
+            <input onkeyup="filterPokemon()" class="search-header" type="text" id="searchforfilter"
+                name="searchforfilter" placeholder="Search Pokemon">
+            <img class="pokemonball" src="img/pokeball.png">
+        </div>
+
+        <div class="main-container-pokemon-cave" id="pokemoncave">
+
+        </div>
+
+        <div id="showDetailsContainer">
+            <div>
+
+                <div id="infoContainerDetails" class="container-pokedex-and-infocontainer">
+
+                </div>
+
+            </div>
+        </div>
+</body>
+
+</html>
