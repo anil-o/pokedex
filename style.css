@@ -58,6 +58,7 @@ body {
     display: flex;
     justify-content: space-between;
     cursor: pointer;
+    box-sizing: border-box;
 }
 
 .pokemon-cave:hover {
@@ -179,7 +180,6 @@ body {
     top: 0;
     min-width: 100vw;
     min-height: 100vh;
-    height: 800px;
     display: flex;
     justify-content: center;
     background-color: rgba(0, 0, 0, 0.8);
@@ -257,7 +257,6 @@ body {
 }
 
 .arrow-right-details {
-    cursor: pointer;
     cursor: pointer;
     position: absolute;
     left: 522px;
@@ -441,7 +440,6 @@ body {
     display: flex;
     justify-content: space-around;
     height: 300px;
-    overflow: hidden;
 }
 
 .moves-detail {
@@ -453,7 +451,7 @@ body {
 }
 
 .moves-scroll {
-    overflow-y: scroll !important;
+    overflow-y: scroll;
     margin-left: 100px;
     margin-right: 45px;
 }
@@ -480,7 +478,112 @@ body {
     display: none;
 }
 
+.overflov-container {
+    overflow: hidden;
+}
+
 .poke-img-showdetails {
     height: 350px;
     width: 350px;
+}
+
+/* Responsive */
+@media(max-width: 480px) {
+    .hide-mobile {
+        display: none;
+    }
+
+    .pokemon-cave {
+        margin-right: unset;
+        margin-left: unset;
+        padding: 8px;
+    }
+
+    .name-of-pokemon {
+        font-size: 25px;
+    }
+
+    .container-pokedex-and-infocontainer {
+        width: unset;
+    }
+
+    .pokemon-container-details {
+        left: 63px;
+        top: -164px;
+    }
+
+    .poke-img-showdetails {
+        height: 230px;
+        width: 230px;
+    }
+
+    .pokedex {
+        position: unset;
+        border-top-left-radius: unset;
+        border-top-right-radius: unset;
+    }
+
+    .arrow-right-details {
+        left: 298px;
+    }
+
+    .show-details-container {
+        min-width: 100%;
+        display: unset;
+        justify-content: unset;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 700px) {
+    .hide-mobile {
+        display: none;
+    }
+
+    .pokemon-cave {
+        margin-right: unset;
+        margin-left: unset;
+        padding: 8px;
+    }
+
+    .name-of-pokemon {
+        font-size: 25px;
+    }
+
+    .container-pokedex-and-infocontainer {
+        width: unset;
+    }
+
+    .pokemon-container-details {
+        left: 209px;
+        top: -225px;
+    }
+
+    .poke-img-showdetails {
+        height: 300px;
+        width: 300px;
+    }
+
+    .pokedex {
+        position: unset;
+        border-top-left-radius: unset;
+        border-top-right-radius: unset;
+    }
+
+    .arrow-right-details {
+        left: 619px;
+    }
+
+    .show-details-container {
+        min-width: 100%;
+        display: unset;
+        justify-content: unset;
+    }
+
+    .name-details {
+        font-size: 45px;
+    }
+
+    .move-details {
+        font-size: 19px;
+    }
 }

@@ -17,40 +17,21 @@ let forSlideAndFurtherFunctions;
 let urlLimit;
 let responseLimit;
 let pokemonInfosLimit;
+let alreadyEmpty = true;
 
+
+/**
+ * functions for initialization
+*/
 async function init() {
     loadPokemon();
     morePokemonsOnScroll();
     pushAllPokemonNames();
-    await test();
-    await secondtest();
-    await thirdtest();
 }
 
-async function test() {
-    let url = `https://pokeapi.co/api/v2/pokemon/1/`;
-    let response = await fetch(url);
-    let pokemonInfos = await response.json();
-    console.log(pokemonInfos);
-}
-
-async function secondtest() {
-    let url = `https://pokeapi.co/api/v2/pokemon-species/1/`;
-    let response = await fetch(url);
-    let pokemonInfos = await response.json();
-    console.log(pokemonInfos);
-}
-
-
-async function thirdtest() {
-    let url = `https://pokeapi.co/api/v2/evolution-chain/2/`;
-    let response = await fetch(url);
-    let pokemonInfos = await response.json();
-    console.log(pokemonInfos);
-}
 
 /**
- * load Pokemon
+ * load pokemon
 */
 async function loadPokemon() {
     await renderPokemon();
@@ -59,7 +40,7 @@ async function loadPokemon() {
 
 
 /**
- * render Pokemon cave
+ * render pokemon cave
 */
 async function renderPokemon() {
     let pokemoncave = document.getElementById('pokemoncave');
@@ -71,72 +52,57 @@ async function renderPokemon() {
         if (pokemonInfosLimit['results'][i]['url'] == ``) {
             continue;
         } else {
-            let url = pokemonInfosLimit['results'][i]['url'];
-            let response = await fetch(url);
-            let pokemonInfos = await response.json();
-            let j = pokemonInfos['id'];
-            beforeIndexForOtherAreas = j;
-            let currentPokemonBeforeUpperCase = pokemonInfos['name'];
-            let currentPokemonAfterUpperCase = makeFirstLetterToUpperCase(currentPokemonBeforeUpperCase);
-            let pokemonImage = pokemonInfos['sprites']['other']['dream_world']['front_default'];
-            if (j <= 9) {
-                j = '00' + j;
-            }
-            if (j <= 99 && j >= 10) {
-                j = '0' + j;
-            }
-            if (j >= 100) {
-                j;
-            }
-            if (pokemonInfos['moves'].length > 1) {
-                let pokemonFirstMove = pokemonInfos['moves'][0]['move']['name'];
-                let pokemonSecondMove = pokemonInfos['moves'][1]['move']['name'];
-                pokemoncave.innerHTML += templateRenderPokemonCaveIfMovesGreaterThanOne(currentPokemonAfterUpperCase, pokemonImage, pokemonFirstMove, pokemonSecondMove, j, i);
-            } else {
-                let pokemonFirstMove = pokemonInfos['moves'][0]['move']['name'];
-                pokemoncave.innerHTML += templateRenderPokemonCaveIfOnlyOneMove(currentPokemonAfterUpperCase, pokemonImage, pokemonFirstMove, j, i);
-            }
-            loadBgColorDependOnTypes(pokemonInfos, i);
+            await getInformationOfThePokemon(i);
         }
     }
 }
 
 
+async function getInformationOfThePokemon(i) {
+    let url = pokemonInfosLimit['results'][i]['url'];
+    let response = await fetch(url);
+    let pokemonInfos = await response.json();
+    let j = pokemonInfos['id'];
+    beforeIndexForOtherAreas = j;
+    let currentPokemonBeforeUpperCase = pokemonInfos['name'];
+    let currentPokemonAfterUpperCase = makeFirstLetterToUpperCase(currentPokemonBeforeUpperCase);
+    let pokemonImage = pokemonInfos['sprites']['other']['dream_world']['front_default'];
+    identifyIdOfThePokemonAndMoves(pokemonInfos, currentPokemonAfterUpperCase, pokemonImage, i, j);
+    loadBgColorDependOnTypes(pokemonInfos, i);
+}
+
+
+function identifyIdOfThePokemonAndMoves(pokemonInfos, currentPokemonAfterUpperCase, pokemonImage, i, j) {
+    if (j <= 9) { j = '00' + j; }
+    if (j <= 99 && j >= 10) { j = '0' + j; }
+    if (j >= 100) { j; }
+    if (pokemonInfos['moves'].length > 1) {
+        let pokemonFirstMove = pokemonInfos['moves'][0]['move']['name'];
+        let pokemonSecondMove = pokemonInfos['moves'][1]['move']['name'];
+        pokemoncave.innerHTML += templateRenderPokemonCaveIfMovesGreaterThanOne(currentPokemonAfterUpperCase, pokemonImage, pokemonFirstMove, pokemonSecondMove, j, i);
+    } else {
+        let pokemonFirstMove = pokemonInfos['moves'][0]['move']['name'];
+        pokemoncave.innerHTML += templateRenderPokemonCaveIfOnlyOneMove(currentPokemonAfterUpperCase, pokemonImage, pokemonFirstMove, j, i);
+    }
+}
+
+/**
+ * render next pokemon cave
+*/
 async function renderNextPokemon() {
     for (let i = nextPokemonCounter; i < pokeCounter; i++) {
         if (pokemonInfosLimit['results'][i]['url'] == ``) {
             continue;
         } else {
-            let url = pokemonInfosLimit['results'][i]['url'];
-            let response = await fetch(url);
-            let pokemonInfos = await response.json();
-            let j = pokemonInfos['id'];
-            beforeIndexForOtherAreas = j;
-            let currentPokemonBeforeUpperCase = pokemonInfos['name'];
-            let currentPokemonAfterUpperCase = makeFirstLetterToUpperCase(currentPokemonBeforeUpperCase);
-            let pokemonImage = pokemonInfos['sprites']['other']['dream_world']['front_default'];
-            if (j <= 9) {
-                j = '00' + j;
-            }
-            if (j <= 99 && j >= 10) {
-                j = '0' + j;
-            }
-            if (j >= 100) {
-                j;
-            }
-            if (pokemonInfos['moves'].length > 1) {
-                let pokemonFirstMove = pokemonInfos['moves'][0]['move']['name'];
-                let pokemonSecondMove = pokemonInfos['moves'][1]['move']['name'];
-                pokemoncave.innerHTML += templateRenderPokemonCaveIfMovesGreaterThanOne(currentPokemonAfterUpperCase, pokemonImage, pokemonFirstMove, pokemonSecondMove, j, i);
-            } else {
-                let pokemonFirstMove = pokemonInfos['moves'][0]['move']['name'];
-                pokemoncave.innerHTML += templateRenderPokemonCaveIfOnlyOneMove(currentPokemonAfterUpperCase, pokemonImage, pokemonFirstMove, j, i);
-            }
-            loadBgColorDependOnTypes(pokemonInfos, i);
+            await getInformationOfThePokemon(i);
         }
     }
 }
 
+
+/**
+ * render the background color of the pokemon
+*/
 function loadBgColorDependOnTypes(pokemonInfos, i) {
     let type = pokemonInfos['types'][0]['type']['name'];
 
@@ -276,24 +242,30 @@ function filterPokemon() {
     searchPokemon = searchPokemon.value;
     searchPokemon = searchPokemon.toLowerCase();
     let pokemoncave = document.getElementById('pokemoncave');
-
     if (searchPokemon == ``) {
-        searchPokemon.innerHTML = ``;
-        pokemoncave.innerHTML = ``;
-        renderPokemon();
-        inactiveScrollForMorePokemons = true;
+        if (alreadyEmpty) {
+            searchPokemon.innerHTML = ``;
+            pokemoncave.innerHTML = ``;
+            renderPokemon();
+            inactiveScrollForMorePokemons = true;
+            alreadyEmpty = false;
+        }
     } else {
         inactiveScrollForMorePokemons = false;
         searchFilter(searchPokemon);
+        alreadyEmpty = true;
     }
 }
 
+
+/**
+ * push all pokemon names in array
+*/
 async function pushAllPokemonNames() {
     let url = `https://pokeapi.co/api/v2/pokemon/?limit=1154`;
     let response = await fetch(url);
     let pokemonInfos = await response.json();
     let count = pokemonInfos['count'];
-
     for (let i = 0; i < count; i++) {
         allPokemonNames.push(pokemonInfos['results'][i]['name']);
     }
@@ -301,7 +273,7 @@ async function pushAllPokemonNames() {
 
 
 /**
- * search Filter for else in function filterPokemon
+ * search filter pokemon
 */
 async function searchFilter(searchPokemon) {
     pokemoncave.innerHTML = ``;
@@ -314,28 +286,27 @@ async function searchFilter(searchPokemon) {
         let firstLetterForFilterPokemon = pokemonInfos['name'].charAt(0);
         currentPokemonForFilter = pokemonInfos['name'];
         let currentPokemonAfterUpperCaseForFilter = makeFirstLetterToUpperCase(currentPokemonForFilter);
-        if (j <= 9) {
-            j = '00' + j;
-        }
-        if (j <= 99 && j >= 10) {
-            j = '0' + j;
-        }
-        if (j >= 100) {
-            j;
-        }
-        if (firstLetterForFilterPokemon.toLowerCase().includes(searchPokemon)) {
-            if (pokemonInfos['moves'].length > 1) {
-                let pokemonFirstMove = pokemonInfos['moves'][0]['move']['name'];
-                let pokemonSecondMove = pokemonInfos['moves'][1]['move']['name'];
-                pokemoncave.innerHTML += templateRenderPokemonCaveIfMovesGreaterThanOne(currentPokemonAfterUpperCaseForFilter, pokemonImage, pokemonFirstMove, pokemonSecondMove, j, i);
-            } else {
-                let pokemonFirstMove = pokemonInfos['moves'][0]['move']['name'];
-                pokemoncave.innerHTML += templateRenderPokemonCaveIfOnlyOneMove(currentPokemonAfterUpperCaseForFilter, pokemonImage, pokemonFirstMove, j, i);
-            }
-            loadBgColorDependOnTypes(pokemonInfos, i);
-        }
+        getIdAndMovesOfThePokemonForSearchFilter(j, i, searchPokemon, pokemonImage, firstLetterForFilterPokemon, currentPokemonAfterUpperCaseForFilter, pokemonInfos)
     }
     searchPokemon.innerHTML = ``;
+}
+
+
+function getIdAndMovesOfThePokemonForSearchFilter(j, i, searchPokemon, pokemonImage, firstLetterForFilterPokemon, currentPokemonAfterUpperCaseForFilter, pokemonInfos) {
+    if (j <= 9) { j = '00' + j; }
+    if (j <= 99 && j >= 10) { j = '0' + j; }
+    if (j >= 100) { j; }
+    if (firstLetterForFilterPokemon.toLowerCase().includes(searchPokemon)) {
+        if (pokemonInfos['moves'].length > 1) {
+            let pokemonFirstMove = pokemonInfos['moves'][0]['move']['name'];
+            let pokemonSecondMove = pokemonInfos['moves'][1]['move']['name'];
+            pokemoncave.innerHTML += templateRenderPokemonCaveIfMovesGreaterThanOne(currentPokemonAfterUpperCaseForFilter, pokemonImage, pokemonFirstMove, pokemonSecondMove, j, i);
+        } else {
+            let pokemonFirstMove = pokemonInfos['moves'][0]['move']['name'];
+            pokemoncave.innerHTML += templateRenderPokemonCaveIfOnlyOneMove(currentPokemonAfterUpperCaseForFilter, pokemonImage, pokemonFirstMove, j, i);
+        }
+        loadBgColorDependOnTypes(pokemonInfos, i);
+    }
 }
 
 
@@ -355,15 +326,16 @@ async function showDetails(i) {
     let currentPokemonBeforeUpperCaseShowDetails = pokemonShowDetails['name']
     let currentPokemonAfterUpperCaseShowDetails = makeFirstLetterToUpperCase(currentPokemonBeforeUpperCaseShowDetails);
     let j = pokemonShowDetails['id'];
-    if (j <= 9) {
-        j = '00' + j;
-    }
-    if (j <= 99 && j >= 10) {
-        j = '0' + j;
-    }
-    if (j >= 100) {
-        j;
-    }
+    getIdAndMovesOfThePokemonForShowDetails(j, currentPokemonAfterUpperCaseShowDetails);
+    loadBgColorDependOnTypesDetails();
+    about();
+}
+
+
+function getIdAndMovesOfThePokemonForShowDetails(j, currentPokemonAfterUpperCaseShowDetails) {
+    if (j <= 9) { j = '00' + j; }
+    if (j <= 99 && j >= 10) { j = '0' + j; }
+    if (j >= 100) { j; }
     if (pokemonShowDetails['moves'].length > 1) {
         infoContainerDetails.innerHTML = templateShowDetailsTwoMoves(j, currentPokemonAfterUpperCaseShowDetails);
     } if (pokemonShowDetails['moves'].length == 1) {
@@ -371,8 +343,6 @@ async function showDetails(i) {
     } if (pokemonShowDetails['moves'].length < 1) {
         infoContainerDetails.innerHTML = templateShowDetailsNoMoves(j, currentPokemonAfterUpperCaseShowDetails);
     }
-    loadBgColorDependOnTypesDetails();
-    about();
 }
 
 
@@ -431,10 +401,9 @@ function templateShowDetailsTwoMoves(j, currentPokemonAfterUpperCaseShowDetails)
                                 
                 </div>
 
-                <div class="moves-container moves-scroll">
+                <div id="movesContainer" class="moves-container">
 
                 <div id="moves"></div>
-                <div></div>
 
                 </div>
         </div>
@@ -611,6 +580,8 @@ function loadBgColorDependOnTypesDetails() {
  * details for pokemon about
 */
 async function about() {
+    let movesContainer = document.getElementById('movesContainer');
+    movesContainer.classList.remove('moves-scroll');
     document.getElementById('baseStats').innerHTML = ``;
     document.getElementById('evolution').innerHTML = ``;
     document.getElementById('about').innerHTML = ``;
@@ -619,13 +590,18 @@ async function about() {
     document.getElementById('basestats-for-font-weight').classList.remove('font-details-bold');
     document.getElementById('evolution-for-font-weight').classList.remove('font-details-bold');
     document.getElementById('moves-for-font-weight').classList.remove('font-details-bold');
-    let about = document.getElementById('about');
     let url = pokemonInfosLimit['results'][forSlideAndFurtherFunctions]['url'];
     let response = await fetch(url);
     pokemonAbout = await response.json();
     let nextUrl = pokemonAbout['species']['url'];
     let nextResponse = await fetch(nextUrl);
     nextPokemonAbout = await nextResponse.json();
+    renderAbout();
+}
+
+
+function renderAbout() {
+    let about = document.getElementById('about');
     let firstAbility = makeFirstLetterToUpperCase(pokemonAbout['abilities'][0]['ability']['name']);
     let generation = makeFirstLetterToUpperCase(nextPokemonAbout['generation']['name']);
     let eggGroups = makeFirstLetterToUpperCase(nextPokemonAbout['egg_groups'][0]['name']);
@@ -666,6 +642,8 @@ function templateAbout(firstAbility, generation, eggGroups) {
  * details for pokemon base stats
 */
 async function baseStats() {
+    let movesContainer = document.getElementById('movesContainer');
+    movesContainer.classList.remove('moves-scroll');
     document.getElementById('baseStats').innerHTML = ``;
     document.getElementById('about').innerHTML = ``;
     document.getElementById('evolution').innerHTML = ``;
@@ -679,19 +657,25 @@ async function baseStats() {
     let response = await fetch(url);
     pokemonBaseStats = await response.json();
     baseStats.innerHTML += templatebaseStats();
-
     let baseStatsProgressbar = document.getElementById('basestatsProgressbar');
+    renderProgressBar(baseStatsProgressbar);
+}
+
+
+/**
+ * render pokemon base stats progressbar
+*/
+function renderProgressBar(baseStatsProgressbar) {
     for (let i = 0; i < pokemonBaseStats['stats'].length; i++) {
         baseStatsProgressbar.innerHTML += templatebaseStatsProgressbar(i);
         let baseStatsprogressbarChild = document.getElementById('basestatsProgressbarWidth' + i);
         baseStatsprogressbarChild.style.width = `${pokemonBaseStats['stats'][i]['base_stat']}%`;
-
-        if(pokemonBaseStats['stats'][i]['base_stat'] > 100) {
+        if (pokemonBaseStats['stats'][i]['base_stat'] > 100) {
             let difference = pokemonBaseStats['stats'][i]['base_stat'] - 100;
             let basestatsProgressbarOverflow = document.getElementById('basestatsProgressbarOverflow' + i);
             basestatsProgressbarOverflow.innerHTML += `<div id="basestatsProgressbarWidthSecond${i}" class="basestats-progressbar-child-second"></div>`
             let basestatsProgressbarOverflowChild = document.getElementById('basestatsProgressbarWidthSecond' + i);
-            basestatsProgressbarOverflowChild.style.width =`${difference}%`;
+            basestatsProgressbarOverflowChild.style.width = `${difference}%`;
         }
     }
 }
@@ -737,6 +721,8 @@ function templatebaseStatsProgressbar(i) {
  * details for pokemon evolution
 */
 async function evolution() {
+    let movesContainer = document.getElementById('movesContainer');
+    movesContainer.classList.remove('moves-scroll');
     document.getElementById('baseStats').innerHTML = ``;
     document.getElementById('about').innerHTML = ``;
     document.getElementById('moves').innerHTML = ``;
@@ -745,6 +731,11 @@ async function evolution() {
     document.getElementById('basestats-for-font-weight').classList.remove('font-details-bold');
     document.getElementById('about-for-font-weight').classList.remove('font-details-bold');
     document.getElementById('moves-for-font-weight').classList.remove('font-details-bold');
+    speciesOfEvolutionUrl();
+}
+
+
+async function speciesOfEvolutionUrl() {
     let countforSlideAndFurtherFunctions = forSlideAndFurtherFunctions + 1;
     let urlSpecies = `https://pokeapi.co/api/v2/pokemon-species/${countforSlideAndFurtherFunctions}/`;
     let responseSpecies = await fetch(urlSpecies);
@@ -755,6 +746,14 @@ async function evolution() {
     let firstEvolutionName = pokemonEvolution['chain']['species']['name'];
     let secondEvolutionName = pokemonEvolution['chain']['evolves_to'][0]['species']['name'];
     let thirdEvolutionName = pokemonEvolution['chain']['evolves_to'][0]['evolves_to'][0]['species']['name'];
+    renderEvolutionOfThePokemon(firstEvolutionName, secondEvolutionName, thirdEvolutionName);
+}
+
+
+/**
+ * render evolutiondetails
+*/
+async function renderEvolutionOfThePokemon(firstEvolutionName, secondEvolutionName, thirdEvolutionName) {
     let firstEvolutionNameUpperCase = makeFirstLetterToUpperCase(firstEvolutionName);
     let secondEvolutionNameUpperCase = makeFirstLetterToUpperCase(secondEvolutionName);
     let thirdEvolutionNameUpperCase = makeFirstLetterToUpperCase(thirdEvolutionName);
@@ -794,9 +793,11 @@ function evolutionTemplate(firstEvolutionNameUpperCase, secondEvolutionNameUpper
 
 
 /**
- * details for pokemon evolution
+ * details for pokemon moves
 */
 async function moves() {
+    let movesContainer = document.getElementById('movesContainer');
+    movesContainer.classList.add('moves-scroll');
     document.getElementById('baseStats').innerHTML = ``;
     document.getElementById('evolution').innerHTML = ``;
     document.getElementById('about').innerHTML = ``;
@@ -809,7 +810,6 @@ async function moves() {
     let response = await fetch(url);
     pokemonMoves = await response.json();
     let moves = document.getElementById('moves');
-
     for (let i = 0; i < pokemonMoves['moves'].length; i++) {
         moves.innerHTML += templateMoves(i);
     }
