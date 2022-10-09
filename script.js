@@ -431,7 +431,10 @@ function templateShowDetailsTwoMoves(j, currentPokemonAfterUpperCaseShowDetails)
                                 
                 </div>
 
-                <div id="moves">
+                <div class="moves-container moves-scroll">
+
+                <div id="moves"></div>
+                <div></div>
 
                 </div>
         </div>
@@ -485,7 +488,7 @@ function templateShowDetailsOneMoves(j, currentPokemonAfterUpperCaseShowDetails)
                                 
                 </div>
 
-                <div id="moves">
+                <div class="moves-container" id="moves">
 
                 </div>
         </div>

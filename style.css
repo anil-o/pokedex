@@ -244,9 +244,8 @@ body {
 }
 
 .arrow-details {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 50px;
+    position: absolute;
+    top: 295px;
 }
 
 .arrow-left-details {
@@ -259,6 +258,9 @@ body {
 
 .arrow-right-details {
     cursor: pointer;
+    cursor: pointer;
+    position: absolute;
+    left: 522px;
 }
 
 .arrow-right-details:hover {
@@ -435,13 +437,43 @@ body {
     width: 120px;
 }
 
-.moves-detail {
-    margin-bottom: 5px;
+.moves-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-around;
+    height: 300px;
+    overflow: hidden;
+}
+
+.moves-detail {
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
     font-weight: 800;
     color: rgb(0, 0, 0, 0.5);
+}
+
+.moves-scroll {
+    overflow-y: scroll !important;
+    margin-left: 100px;
+    margin-right: 45px;
+}
+
+.moves-scroll::-webkit-scrollbar {
+    width: 20px;
+}
+
+.moves-scroll::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.moves-scroll::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+}
+
+.moves-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.1);
 }
 
 .d-none {
