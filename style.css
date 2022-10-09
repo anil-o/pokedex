@@ -194,7 +194,7 @@ body {
     display: flex;
     flex-direction: column;
     padding: 24px;
-    height: 100vh;
+    height: 550px;
     border-top-left-radius: 40px;
     border-top-right-radius: 40px;
     box-sizing: border-box;
@@ -208,7 +208,7 @@ body {
     top: 480px;
     left: 0;
     bottom: 0;
-    height: 100vh;
+    height: 100%;
     width: 100%;
 }
 

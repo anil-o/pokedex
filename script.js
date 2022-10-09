@@ -314,6 +314,8 @@ function getIdAndMovesOfThePokemonForSearchFilter(j, i, searchPokemon, pokemonIm
  * show pokemon details
 */
 async function showDetails(i) {
+    let bodyContainer = document.getElementById('bodyContainer');
+    bodyContainer.style = "overflow: hidden;";
     forSlideAndFurtherFunctions = i;
     let showDetailsContainer = document.getElementById('showDetailsContainer');
     showDetailsContainer.classList.add('show-details-container');
@@ -833,6 +835,8 @@ function back() {
     let showDetailsContainer = document.getElementById('showDetailsContainer');
     showDetailsContainer.classList.remove('showDetailsContainer');
     showDetailsContainer.classList.add('d-none');
+    let bodyContainer = document.getElementById('bodyContainer');
+    bodyContainer.style = "overflow: unset;";
 }
 
 
