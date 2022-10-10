@@ -582,8 +582,6 @@ function loadBgColorDependOnTypesDetails() {
  * details for pokemon about
 */
 async function about() {
-    let movesContainer = document.getElementById('movesContainer');
-    movesContainer.classList.remove('moves-scroll');
     document.getElementById('baseStats').innerHTML = ``;
     document.getElementById('evolution').innerHTML = ``;
     document.getElementById('about').innerHTML = ``;
@@ -599,6 +597,8 @@ async function about() {
     let nextResponse = await fetch(nextUrl);
     nextPokemonAbout = await nextResponse.json();
     renderAbout();
+    let movesContainer = document.getElementById('movesContainer');
+    movesContainer.classList.remove('moves-scroll');
 }
 
 
@@ -644,8 +644,6 @@ function templateAbout(firstAbility, generation, eggGroups) {
  * details for pokemon base stats
 */
 async function baseStats() {
-    let movesContainer = document.getElementById('movesContainer');
-    movesContainer.classList.remove('moves-scroll');
     document.getElementById('baseStats').innerHTML = ``;
     document.getElementById('about').innerHTML = ``;
     document.getElementById('evolution').innerHTML = ``;
@@ -661,6 +659,8 @@ async function baseStats() {
     baseStats.innerHTML += templatebaseStats();
     let baseStatsProgressbar = document.getElementById('basestatsProgressbar');
     renderProgressBar(baseStatsProgressbar);
+    let movesContainer = document.getElementById('movesContainer');
+    movesContainer.classList.remove('moves-scroll');
 }
 
 
@@ -723,8 +723,6 @@ function templatebaseStatsProgressbar(i) {
  * details for pokemon evolution
 */
 async function evolution() {
-    let movesContainer = document.getElementById('movesContainer');
-    movesContainer.classList.remove('moves-scroll');
     document.getElementById('baseStats').innerHTML = ``;
     document.getElementById('about').innerHTML = ``;
     document.getElementById('moves').innerHTML = ``;
@@ -734,6 +732,8 @@ async function evolution() {
     document.getElementById('about-for-font-weight').classList.remove('font-details-bold');
     document.getElementById('moves-for-font-weight').classList.remove('font-details-bold');
     speciesOfEvolutionUrl();
+    let movesContainer = document.getElementById('movesContainer');
+    movesContainer.classList.remove('moves-scroll');
 }
 
 
@@ -798,8 +798,6 @@ function evolutionTemplate(firstEvolutionNameUpperCase, secondEvolutionNameUpper
  * details for pokemon moves
 */
 async function moves() {
-    let movesContainer = document.getElementById('movesContainer');
-    movesContainer.classList.add('moves-scroll');
     document.getElementById('baseStats').innerHTML = ``;
     document.getElementById('evolution').innerHTML = ``;
     document.getElementById('about').innerHTML = ``;
@@ -815,6 +813,8 @@ async function moves() {
     for (let i = 0; i < pokemonMoves['moves'].length; i++) {
         moves.innerHTML += templateMoves(i);
     }
+    let movesContainer = document.getElementById('movesContainer');
+    movesContainer.classList.add('moves-scroll');
 }
 
 
@@ -835,8 +835,6 @@ function back() {
     let showDetailsContainer = document.getElementById('showDetailsContainer');
     showDetailsContainer.classList.remove('showDetailsContainer');
     showDetailsContainer.classList.add('d-none');
-    let bodyContainer = document.getElementById('bodyContainer');
-    bodyContainer.style = "overflow: unset;";
 }
 
 
