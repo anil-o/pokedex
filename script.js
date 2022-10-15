@@ -105,58 +105,7 @@ async function renderNextPokemon() {
 */
 function loadBgColorDependOnTypes(pokemonInfos, i) {
     let type = pokemonInfos['types'][0]['type']['name'];
-
-    if (type == 'grass') {
-        document.getElementById('pokemonfortype' + i).classList.add('grass');
-    }
-    if (type == 'fire') {
-        document.getElementById('pokemonfortype' + i).classList.add('fire');
-    }
-    if (type == 'water') {
-        document.getElementById('pokemonfortype' + i).classList.add('water');
-    }
-    if (type == 'electric') {
-        document.getElementById('pokemonfortype' + i).classList.add('electric');;
-    }
-    if (type == 'bug') {
-        document.getElementById('pokemonfortype' + i).classList.add('bug');
-    }
-    if (type == 'normal') {
-        document.getElementById('pokemonfortype' + i).classList.add('normal');
-    }
-    if (type == 'poison') {
-        document.getElementById('pokemonfortype' + i).classList.add('poison');
-    }
-    if (type == 'ground') {
-        document.getElementById('pokemonfortype' + i).classList.add('ground');
-    }
-    if (type == 'fairy') {
-        document.getElementById('pokemonfortype' + i).classList.add('fairy');
-    }
-    if (type == 'fighting') {
-        document.getElementById('pokemonfortype' + i).classList.add('fighting');
-    }
-    if (type == 'ghost') {
-        document.getElementById('pokemonfortype' + i).classList.add('ghost');
-    }
-    if (type == 'rock') {
-        document.getElementById('pokemonfortype' + i).classList.add('rock');
-    }
-    if (type == 'psychic') {
-        document.getElementById('pokemonfortype' + i).classList.add('psychic');
-    }
-    if (type == 'dragon') {
-        document.getElementById('pokemonfortype' + i).classList.add('dragon');
-    }
-    if (type == 'ice') {
-        document.getElementById('pokemonfortype' + i).classList.add('ice');
-    }
-    if (type == 'dark') {
-        document.getElementById('pokemonfortype' + i).classList.add('dark');
-    }
-    if (type == 'steel') {
-        document.getElementById('pokemonfortype' + i).classList.add('steel');
-    }
+    document.getElementById('pokemonfortype' + i).classList.add(type);
 }
 
 
@@ -524,72 +473,15 @@ function templateShowDetailsNoMoves(j, currentPokemonAfterUpperCaseShowDetails) 
 
 function loadBgColorDependOnTypesDetails() {
     let type = pokemonShowDetails['types'][0]['type']['name'];
+    document.getElementById('pokedexDetails' + beforeIndexForOtherAreas).classList.add(type);
 
-    if (type == 'grass') {
-        document.getElementById('pokedexDetails' + beforeIndexForOtherAreas).classList.add('grass');
-    }
-    if (type == 'fire') {
-        document.getElementById('pokedexDetails' + beforeIndexForOtherAreas).classList.add('fire');
-    }
-    if (type == 'water') {
-        document.getElementById('pokedexDetails' + beforeIndexForOtherAreas).classList.add('water');
-    }
-    if (type == 'electric') {
-        document.getElementById('pokedexDetails' + beforeIndexForOtherAreas).classList.add('electric');;
-    }
-    if (type == 'bug') {
-        document.getElementById('pokedexDetails' + beforeIndexForOtherAreas).classList.add('bug');
-    }
-    if (type == 'normal') {
-        document.getElementById('pokedexDetails' + beforeIndexForOtherAreas).classList.add('normal');
-    }
-    if (type == 'poison') {
-        document.getElementById('pokedexDetails' + beforeIndexForOtherAreas).classList.add('poison');
-    }
-    if (type == 'ground') {
-        document.getElementById('pokedexDetails' + beforeIndexForOtherAreas).classList.add('ground');
-    }
-    if (type == 'fairy') {
-        document.getElementById('pokedexDetails' + beforeIndexForOtherAreas).classList.add('fairy');
-    }
-    if (type == 'fighting') {
-        document.getElementById('pokedexDetails' + beforeIndexForOtherAreas).classList.add('fighting');
-    }
-    if (type == 'ghost') {
-        document.getElementById('pokedexDetails' + beforeIndexForOtherAreas).classList.add('ghost');
-    }
-    if (type == 'rock') {
-        document.getElementById('pokedexDetails' + beforeIndexForOtherAreas).classList.add('rock');
-    }
-    if (type == 'psychic') {
-        document.getElementById('pokedexDetails' + beforeIndexForOtherAreas).classList.add('psychic');
-    }
-    if (type == 'dragon') {
-        document.getElementById('pokedexDetails' + beforeIndexForOtherAreas).classList.add('dragon');
-    }
-    if (type == 'ice') {
-        document.getElementById('pokedexDetails' + beforeIndexForOtherAreas).classList.add('ice');
-    }
-    if (type == 'dark') {
-        document.getElementById('pokedexDetails' + beforeIndexForOtherAreas).classList.add('dark');
-    }
-    if (type == 'steel') {
-        document.getElementById('pokedexDetails' + beforeIndexForOtherAreas).classList.add('steel');
-    }
 }
 
 /**
  * details for pokemon about
 */
 async function about() {
-    document.getElementById('baseStats').innerHTML = ``;
-    document.getElementById('evolution').innerHTML = ``;
-    document.getElementById('about').innerHTML = ``;
-    document.getElementById('moves').innerHTML = ``;
-    document.getElementById('about-for-font-weight').classList.add('font-details-bold');
-    document.getElementById('basestats-for-font-weight').classList.remove('font-details-bold');
-    document.getElementById('evolution-for-font-weight').classList.remove('font-details-bold');
-    document.getElementById('moves-for-font-weight').classList.remove('font-details-bold');
+    cleanBeforStartWithAboutContent();
     let url = pokemonInfosLimit['results'][forSlideAndFurtherFunctions]['url'];
     let response = await fetch(url);
     pokemonAbout = await response.json();
@@ -599,6 +491,18 @@ async function about() {
     renderAbout();
     let movesContainer = document.getElementById('movesContainer');
     movesContainer.classList.remove('moves-scroll');
+}
+
+
+function cleanBeforStartWithAboutContent() {
+    document.getElementById('baseStats').innerHTML = ``;
+    document.getElementById('evolution').innerHTML = ``;
+    document.getElementById('about').innerHTML = ``;
+    document.getElementById('moves').innerHTML = ``;
+    document.getElementById('about-for-font-weight').classList.add('font-details-bold');
+    document.getElementById('basestats-for-font-weight').classList.remove('font-details-bold');
+    document.getElementById('evolution-for-font-weight').classList.remove('font-details-bold');
+    document.getElementById('moves-for-font-weight').classList.remove('font-details-bold');
 }
 
 
@@ -644,14 +548,7 @@ function templateAbout(firstAbility, generation, eggGroups) {
  * details for pokemon base stats
 */
 async function baseStats() {
-    document.getElementById('baseStats').innerHTML = ``;
-    document.getElementById('about').innerHTML = ``;
-    document.getElementById('evolution').innerHTML = ``;
-    document.getElementById('moves').innerHTML = ``;
-    document.getElementById('basestats-for-font-weight').classList.add('font-details-bold');
-    document.getElementById('about-for-font-weight').classList.remove('font-details-bold');
-    document.getElementById('evolution-for-font-weight').classList.remove('font-details-bold');
-    document.getElementById('moves-for-font-weight').classList.remove('font-details-bold');
+    cleanBeforStartWithBaseStatsContent();
     let baseStats = document.getElementById('baseStats');
     let url = pokemonInfosLimit['results'][forSlideAndFurtherFunctions]['url'];
     let response = await fetch(url);
@@ -661,6 +558,18 @@ async function baseStats() {
     renderProgressBar(baseStatsProgressbar);
     let movesContainer = document.getElementById('movesContainer');
     movesContainer.classList.remove('moves-scroll');
+}
+
+
+function cleanBeforStartWithBaseStatsContent() {
+    document.getElementById('baseStats').innerHTML = ``;
+    document.getElementById('about').innerHTML = ``;
+    document.getElementById('evolution').innerHTML = ``;
+    document.getElementById('moves').innerHTML = ``;
+    document.getElementById('basestats-for-font-weight').classList.add('font-details-bold');
+    document.getElementById('about-for-font-weight').classList.remove('font-details-bold');
+    document.getElementById('evolution-for-font-weight').classList.remove('font-details-bold');
+    document.getElementById('moves-for-font-weight').classList.remove('font-details-bold');
 }
 
 
@@ -723,6 +632,14 @@ function templatebaseStatsProgressbar(i) {
  * details for pokemon evolution
 */
 async function evolution() {
+    cleanBeforStartWithEvolutionContent();
+    speciesOfEvolutionUrl();
+    let movesContainer = document.getElementById('movesContainer');
+    movesContainer.classList.remove('moves-scroll');
+}
+
+
+function cleanBeforStartWithEvolutionContent() {
     document.getElementById('baseStats').innerHTML = ``;
     document.getElementById('about').innerHTML = ``;
     document.getElementById('moves').innerHTML = ``;
@@ -731,9 +648,6 @@ async function evolution() {
     document.getElementById('basestats-for-font-weight').classList.remove('font-details-bold');
     document.getElementById('about-for-font-weight').classList.remove('font-details-bold');
     document.getElementById('moves-for-font-weight').classList.remove('font-details-bold');
-    speciesOfEvolutionUrl();
-    let movesContainer = document.getElementById('movesContainer');
-    movesContainer.classList.remove('moves-scroll');
 }
 
 
@@ -798,14 +712,7 @@ function evolutionTemplate(firstEvolutionNameUpperCase, secondEvolutionNameUpper
  * details for pokemon moves
 */
 async function moves() {
-    document.getElementById('baseStats').innerHTML = ``;
-    document.getElementById('evolution').innerHTML = ``;
-    document.getElementById('about').innerHTML = ``;
-    document.getElementById('moves').innerHTML = ``;
-    document.getElementById('moves-for-font-weight').classList.add('font-details-bold');
-    document.getElementById('evolution-for-font-weight').classList.remove('font-details-bold');
-    document.getElementById('basestats-for-font-weight').classList.remove('font-details-bold');
-    document.getElementById('about-for-font-weight').classList.remove('font-details-bold');
+    cleanBeforStartWithMovesContent();
     let url = pokemonInfosLimit['results'][forSlideAndFurtherFunctions]['url'];
     let response = await fetch(url);
     pokemonMoves = await response.json();
@@ -815,6 +722,18 @@ async function moves() {
     }
     let movesContainer = document.getElementById('movesContainer');
     movesContainer.classList.add('moves-scroll');
+}
+
+
+function cleanBeforStartWithMovesContent() {
+    document.getElementById('baseStats').innerHTML = ``;
+    document.getElementById('evolution').innerHTML = ``;
+    document.getElementById('about').innerHTML = ``;
+    document.getElementById('moves').innerHTML = ``;
+    document.getElementById('moves-for-font-weight').classList.add('font-details-bold');
+    document.getElementById('evolution-for-font-weight').classList.remove('font-details-bold');
+    document.getElementById('basestats-for-font-weight').classList.remove('font-details-bold');
+    document.getElementById('about-for-font-weight').classList.remove('font-details-bold');
 }
 
 
@@ -835,6 +754,8 @@ function back() {
     let showDetailsContainer = document.getElementById('showDetailsContainer');
     showDetailsContainer.classList.remove('showDetailsContainer');
     showDetailsContainer.classList.add('d-none');
+    let bodyContainer = document.getElementById('bodyContainer');
+    bodyContainer.style = "overflow: unset;";
 }
 
 
