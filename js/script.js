@@ -61,7 +61,7 @@ async function renderPokemon() {
     urlLimit = `https://pokeapi.co/api/v2/pokemon/?limit=1154`;
     responseLimit = await fetch(urlLimit);
     pokemonInfosLimit = await responseLimit.json();
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < pokeCounter; i++) {
         if (pokemonInfosLimit['results'][i]['url'] == ``) {
             continue;
         } else {
@@ -99,8 +99,10 @@ async function getInformationOfThePokemon(i) {
     let currentPokemonAfterUpperCase = makeFirstLetterToUpperCase(currentPokemonBeforeUpperCase);
     if (pokemonInfos['sprites']['other']['dream_world']['front_default'] !== null) {
         pokemonImage = pokemonInfos['sprites']['other']['dream_world']['front_default'];
-    } else {
+    } if (pokemonInfos['sprites']['other']['official-artwork']['front_default'] !== null) {
         pokemonImage = pokemonInfos['sprites']['other']['official-artwork']['front_default'];
+    } else {
+        pokemonImage = pokemonInfos['sprites']['front_default'];
     }
     identifyIdOfThePokemonAndMoves(pokemonInfos, currentPokemonAfterUpperCase, pokemonImage, i, j);
     loadBgColorDependOnTypes(pokemonInfos, i);
@@ -112,7 +114,8 @@ function identifyIdOfThePokemonAndMoves(pokemonInfos, currentPokemonAfterUpperCa
     if (j <= 99 && j >= 10) { j = '0' + j; }
     if (j >= 100) { j; }
     if (pokemonInfos['moves'].length <= 0) {
-        pokemoncave.innerHTML = `<div>this value does not exist for this pokemon</div>`;
+        let noMove = `<div>this value does not exist for this pokemon</div>`;
+        pokemoncave.innerHTML += templateRenderPokemonCaveIfOnlyOneMove(currentPokemonAfterUpperCase, pokemonImage, noMove, j, i);
     } else {
         if (pokemonInfos['moves'].length > 1) {
             let pokemonFirstMove = pokemonInfos['moves'][0]['move']['name'];
@@ -130,7 +133,9 @@ function identifyIdOfThePokemonAndMoves(pokemonInfos, currentPokemonAfterUpperCa
  * render the background color of the pokemon
 */
 function loadBgColorDependOnTypes(pokemonInfos, i) {
-    if(pokemonInfos['types'][0]['type']['name'] === null) {
+    console.log(i);
+    console.log(pokemonInfos['types'][0]['type']['name']);
+    if (!pokemonInfos['types'][0]['type']['name']) {
         document.getElementById('pokemonfortype' + i).classList.add('bgcolor');
     } else {
         let type = pokemonInfos['types'][0]['type']['name'];
@@ -184,7 +189,7 @@ async function morePokemonsOnScroll() {
  * load pokemons after search filter
 */
 async function loadPokemonInfos(currentPokemon, i) {
-    let pokemonImage
+    let pokemonImage;
     let currentPokemonAfterUpperCaseForFilter = makeFirstLetterToUpperCase(currentPokemon);
     let url = `https://pokeapi.co/api/v2/pokemon/${currentPokemon}/`;
     let response = await fetch(url);
@@ -293,7 +298,7 @@ function makeFirstLetterToUpperCase(currentPokemonBeforeUpperCaseShowDetails) {
 
 
 function loadBgColorDependOnTypesDetails() {
-    if(pokemonShowDetails['types'][0]['type']['name'] === null) {
+    if(!pokemonShowDetails['types'][0]['type']['name']) {
         document.getElementById('pokedexDetails' + beforeIndexForOtherAreas).classList.add('bgcolor');
     } else {
         let type = pokemonShowDetails['types'][0]['type']['name'];
@@ -334,11 +339,11 @@ async function searchFilter(searchPokemon, searchPokemonForEmpty) {
             i = allPokemonNames.length;
             await renderPokemonAfterSearchFilter();
         }
-        if(searchPokemon.value != searchPokemonForEmpty) {
+        if (searchPokemon.value != searchPokemonForEmpty) {
             i = allPokemonNames.length;
         } else {
             if (currentPokemon.toLowerCase().includes(searchPokemon.value.toLowerCase())) {
-                await loadPokemonInfos(currentPokemon, i);
+                await loadPokemonInfos(currentPokemon, j);
             }
         }
     }

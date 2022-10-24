@@ -209,7 +209,7 @@ async function speciesOfEvolutionUrl() {
     if (countforSlideAndFurtherFunctions > 905) {
         let evolution = document.getElementById('evolution');
         evolution.classList.remove('evolution-container');
-        evolution.innerHTML += templateForNoEvolution(); 
+        evolution.innerHTML += templateForNoEvolution();
     } else {
         let urlSpecies = `https://pokeapi.co/api/v2/pokemon-species/${countforSlideAndFurtherFunctions}/`;
         let responseSpecies = await fetch(urlSpecies);
@@ -217,10 +217,16 @@ async function speciesOfEvolutionUrl() {
         let url = pokemonSpecies['evolution_chain']['url'];
         let response = await fetch(url);
         let pokemonEvolution = await response.json();
-        let firstEvolutionName = pokemonEvolution['chain']['species']['name'];
-        let secondEvolutionName = pokemonEvolution['chain']['evolves_to'][0]['species']['name'];
-        let thirdEvolutionName = pokemonEvolution['chain']['evolves_to'][0]['evolves_to'][0]['species']['name'];
-        renderEvolutionOfThePokemon(firstEvolutionName, secondEvolutionName, thirdEvolutionName);
+        try {
+            let firstEvolutionName = pokemonEvolution['chain']['species']['name'];
+            let secondEvolutionName = pokemonEvolution['chain']['evolves_to'][0]['species']['name'];
+            let thirdEvolutionName = pokemonEvolution['chain']['evolves_to'][0]['evolves_to'][0]['species']['name'];
+            renderEvolutionOfThePokemon(firstEvolutionName, secondEvolutionName, thirdEvolutionName);
+        } catch (error) {
+            let evolution = document.getElementById('evolution');
+            evolution.classList.remove('evolution-container');
+            evolution.innerHTML += templateForNoEvolution();
+        }
     }
 }
 
