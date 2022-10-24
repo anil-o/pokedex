@@ -133,8 +133,6 @@ function identifyIdOfThePokemonAndMoves(pokemonInfos, currentPokemonAfterUpperCa
  * render the background color of the pokemon
 */
 function loadBgColorDependOnTypes(pokemonInfos, i) {
-    console.log(i);
-    console.log(pokemonInfos['types'][0]['type']['name']);
     if (!pokemonInfos['types'][0]['type']['name']) {
         document.getElementById('pokemonfortype' + i).classList.add('bgcolor');
     } else {
